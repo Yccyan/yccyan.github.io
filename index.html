@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap');
+
+    :root {
+      --bg: #fbfcff;
+      --fg: #0b1224;
+      --muted: #1f2b45;
+      --accent: #1f5bff;
+      --accent-2: #0fa3ff;
+      --card: #ffffff;
+      --border: #c7d2e8;
+      --shadow: 0 18px 44px rgba(25, 47, 89, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 3vw;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'Space Grotesk', 'DM Sans', system-ui, -apple-system, sans-serif;
+      font-size: 16.5px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    body::before,
+    body::after {
+      content: none;
+    }
+
+    .shell {
+      position: relative;
+      width: min(1100px, 92vw);
+      padding: clamp(1.6rem, 4vw, 2.6rem);
+      border-radius: 24px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow);
+      backdrop-filter: none;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    .shell::after {
+      content: none;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: #ffffff;
+      border: 1px solid #b4c4e2;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      color: var(--fg);
+      backdrop-filter: blur(6px);
+    }
+
+    .tag .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 12px rgba(119, 255, 210, 0.8);
+    }
+
+    .hero {
+      margin: clamp(1.4rem, 3vw, 2.1rem) 0 clamp(1.8rem, 4vw, 2.7rem);
+      max-width: 740px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(3rem, 6.6vw, 4.2rem);
+      line-height: 1.08;
+      letter-spacing: -0.018em;
+      font-weight: 800;
+    }
+
+    h1 .glow {
+      color: var(--accent);
+      text-shadow: none;
+    }
+
+    p.lede {
+      margin: 0.9rem 0 0;
+      color: #0b1224;
+      font-size: 1.12rem;
+      max-width: 640px;
+      line-height: 1.8;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(1.6rem, 3.5vw, 2.05rem);
+      letter-spacing: -0.012em;
+    }
+
+    .lede-small {
+      margin: 10px 0 14px;
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 720px;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: clamp(1.2rem, 3vw, 1.7rem);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 18px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition: transform 200ms ease, box-shadow 200ms ease, background 200ms ease, border-color 200ms ease;
+      font-size: 1.02rem;
+    }
+
+    .btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #081020;
+      box-shadow: 0 12px 32px rgba(90, 91, 255, 0.28);
+    }
+
+    .btn-ghost {
+      background: #ffffff;
+      color: var(--fg);
+      border-color: var(--border);
+    }
+
+    .btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      box-shadow: 0 18px 38px rgba(41, 73, 138, 0.2);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+      box-shadow: 0 10px 24px rgba(41, 73, 138, 0.15);
+    }
+
+    .pulse {
+      position: absolute;
+      pointer-events: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(31, 91, 255, 0.2), transparent 60%);
+      opacity: 0;
+      transform: scale(0);
+      transition: opacity 250ms ease, transform 350ms ease;
+      mix-blend-mode: normal;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: clamp(1.8rem, 5vw, 2.6rem);
+    }
+
+    .card {
+      position: relative;
+      padding: 16px 18px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      background: radial-gradient(circle, rgba(90, 91, 255, 0.15), transparent 60%);
+      top: -30px;
+      right: -30px;
+      opacity: 0.7;
+    }
+
+    .card-label {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #44506b;
+      font-size: 0.78rem;
+      margin-bottom: 6px;
+    }
+
+    .card-value {
+      font-size: 1.08rem;
+      font-weight: 700;
+    }
+
+    .feedback {
+      margin-top: clamp(2.1rem, 5vw, 3rem);
+      padding: clamp(1.1rem, 3vw, 1.6rem);
+      border-radius: 18px;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(31, 91, 255, 0.08), rgba(15, 163, 255, 0.08), #ffffff 40%);
+      box-shadow: 0 14px 36px rgba(25, 47, 89, 0.12);
+      display: grid;
+      gap: 12px;
+    }
+
+    .feedback .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #44506b;
+      font-size: 0.85rem;
+      margin: 0;
+    }
+
+    .feedback-form {
+      display: grid;
+      gap: 14px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f4f7ff;
+      color: var(--fg);
+      font: inherit;
+      transition: border-color 150ms ease, box-shadow 150ms ease, background 150ms ease;
+    }
+
+    .field textarea {
+      resize: vertical;
+      min-height: 120px;
+      line-height: 1.5;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(31, 91, 255, 0.18);
+      background: #ffffff;
+    }
+
+    .feedback-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      justify-content: space-between;
+    }
+
+    .checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.95rem;
+      color: var(--muted);
+      user-select: none;
+    }
+
+    .checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+    }
+
+    .feedback-hint {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .toast {
+      position: fixed;
+      right: clamp(1rem, 3vw, 1.6rem);
+      bottom: clamp(1rem, 3vw, 1.6rem);
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.96);
+      color: var(--fg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 14px 30px rgba(25, 47, 89, 0.16);
+      z-index: 20;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 200ms ease, transform 200ms ease;
+      font-size: 0.95rem;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 620px) {
+      .shell {
+        padding: 1.3rem;
+      }
+      h1 {
+        font-size: clamp(2.3rem, 8vw, 2.7rem);
+      }
+      .actions {
+        gap: 10px;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .feedback-actions {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <span class="tag">
+      <span class="dot" aria-hidden="true"></span>
+      live - hello world
+    </span>
+
+    <div class="hero">
+      <h1><span class="glow">Hello World</span> crafted with a little light.</h1>
+      <p class="lede">
+        A crisp starting point for your project or profile. Tune the palette, swap the message,
+        and now keep a feedback inbox ready for replies.
+      </p>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-primary" id="wave-btn">
+        Send a friendly wave
+      </button>
+      <button class="btn btn-ghost" id="copy-btn">
+        Copy "hello world"
+      </button>
+    </div>
+
+    <div class="meta">
+      <div class="card">
+        <div class="card-label">Status</div>
+        <div class="card-value">Online & glowing</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Greeting</div>
+        <div class="card-value">hello world - everywhere</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Tip</div>
+        <div class="card-value">edit this text & deploy to GitHub Pages</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Feedback</div>
+        <div class="card-value">Emails now land in your inbox</div>
+      </div>
+    </div>
+
+    <div class="feedback" id="feedback">
+      <p class="eyebrow">Feedback inbox</p>
+      <h2>Tell us what to build next</h2>
+      <p class="lede-small">Leave your email so we can respond. We keep it human and read every note.</p>
+      <form class="feedback-form" id="feedback-form">
+        <div class="field">
+          <label for="feedback-email">Your email</label>
+          <input type="email" id="feedback-email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="feedback-message">Your feedback</label>
+          <textarea id="feedback-message" name="message" rows="4" placeholder="Share a request, bug, or idea" required></textarea>
+        </div>
+        <div class="feedback-actions">
+          <label class="checkbox" for="copy-me">
+            <input type="checkbox" id="copy-me" checked>
+            <span>Send me a copy</span>
+          </label>
+          <button class="btn btn-primary" type="submit" id="feedback-submit">
+            Send feedback
+          </button>
+        </div>
+        <p class="feedback-hint" id="feedback-hint">We reply to the email you leave after reading each note.</p>
+      </form>
+    </div>
+
+    <span class="pulse" aria-hidden="true"></span>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const waveBtn = document.getElementById('wave-btn');
+    const copyBtn = document.getElementById('copy-btn');
+    const pulse = document.querySelector('.pulse');
+    const toast = document.getElementById('toast');
+    const feedbackForm = document.getElementById('feedback-form');
+    const feedbackEmail = document.getElementById('feedback-email');
+    const feedbackMessage = document.getElementById('feedback-message');
+    const copyMe = document.getElementById('copy-me');
+    const feedbackHint = document.getElementById('feedback-hint');
+    const feedbackSubmit = document.getElementById('feedback-submit');
+
+    const showToast = (message) => {
+      toast.textContent = message;
+      toast.classList.add('show');
+      clearTimeout(showToast.timeout);
+      showToast.timeout = setTimeout(() => toast.classList.remove('show'), 1900);
+    };
+
+    waveBtn.addEventListener('click', (event) => {
+      const { clientX, clientY } = event;
+      pulse.style.left = clientX + 'px';
+      pulse.style.top = clientY + 'px';
+      pulse.style.opacity = '1';
+      pulse.style.transform = 'scale(12)';
+      requestAnimationFrame(() => {
+        pulse.style.opacity = '0';
+        pulse.style.transform = 'scale(0)';
+      });
+      const now = new Date().toLocaleTimeString();
+      showToast('wave sent - ' + now);
+    });
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText('hello world');
+        showToast('copied "hello world"');
+      } catch (err) {
+        showToast('copy not available here');
+      }
+    });
+
+    const validEmail = (value) => /\S+@\S+\.\S+/.test(value);
+    const fakeSend = (payload) => new Promise((resolve) => setTimeout(() => resolve(payload), 650));
+
+    feedbackForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const email = feedbackEmail.value.trim();
+      const message = feedbackMessage.value.trim();
+
+      if (!validEmail(email)) {
+        feedbackEmail.focus();
+        showToast('Please leave a valid email so we can reply');
+        return;
+      }
+
+      if (!message) {
+        feedbackMessage.focus();
+        showToast('Add a quick note so we know how to help');
+        return;
+      }
+
+      const originalText = feedbackSubmit.textContent;
+      feedbackSubmit.disabled = true;
+      feedbackSubmit.textContent = 'Sending...';
+
+      try {
+        await fakeSend({ email, message, copy: copyMe.checked });
+        showToast('Thanks! We got your feedback');
+        feedbackHint.textContent = `We will reply to ${email} soon.`;
+        feedbackForm.reset();
+        copyMe.checked = true;
+      } catch (err) {
+        showToast('Could not send right now, please try again');
+        feedbackHint.textContent = 'Please try again in a few seconds.';
+      } finally {
+        feedbackSubmit.disabled = false;
+        feedbackSubmit.textContent = originalText;
+      }
+    });
+  </script>
+</body>
+</html>
